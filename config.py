@@ -2,7 +2,6 @@ import collections
 import os
 import yaml
 from copy import deepcopy
-
 from loghelper import log
 
 # 这个字段现在还没找好塞什么地方好，就先塞config这里了
@@ -12,10 +11,10 @@ update_config_need = False
 
 config = {
     'enable': True, 'version': 15, "push": "",
-    'account': {'cookie': '', 'stuid': '', 'stoken': '', 'mid': ''},
+    'account': {'cookie': os.getenv("AutoMihoyoBBS_cookies", ''), 'stuid': '', 'stoken': '', 'mid': ''},
     'device': {'name': 'Xiaomi MI 6', 'model': 'Mi 6', 'id': '', 'fp': ''},
     'mihoyobbs': {
-        'enable': True, 'checkin': True, 'checkin_list': [5, 2],
+        'enable': False, 'checkin': True, 'checkin_list': [5, 2],
         'read': True, 'like': True, 'cancel_like': True, 'share': True
     },
     'games': {
@@ -125,20 +124,21 @@ def update_v14_update(data: dict):
 
 def load_config(p_path=None):
     global config
-    if not p_path:
-        p_path = config_Path
-    with open(p_path, "r", encoding='utf-8') as f:
-        data = yaml.load(f, Loader=yaml.FullLoader)
-    if data['version'] != config_raw['version']:
-        if data['version'] == 11:
-            data = config_v11_update(data)
-        if data['version'] == 12:
-            data = config_v12_update(data)
-        if data['version'] == 13:
-            data = config_v13_update(data)
-        if data['version'] == 14:
-            data = update_v14_update(data)
-        save_config(p_config=data)
+    # if not p_path:
+    #     p_path = config_Path
+    # with open(p_path, "r", encoding='utf-8') as f:
+    #     data = yaml.load(f, Loader=yaml.FullLoader)
+    # if data['version'] != config_raw['version']:
+    #     if data['version'] == 11:
+    #         data = config_v11_update(data)
+    #     if data['version'] == 12:
+    #         data = config_v12_update(data)
+    #     if data['version'] == 13:
+    #         data = config_v13_update(data)
+    #     if data['version'] == 14:
+    #         data = update_v14_update(data)
+    #     save_config(p_config=data)
+    data = deepcopy(config)
     # 去除cookie最末尾的空格
     data["account"]["cookie"] = str(data["account"]["cookie"]).rstrip(' ')
     config = data
