@@ -2,7 +2,7 @@ enable: true
 version: 15
 push: ''
 account:
-  cookie: CookieError
+  cookie: ''
   stuid: ''
   stoken: ''
   mid: ''
