@@ -75,7 +75,6 @@ get_token_by_stoken = f"{passport_api}/account/ma-cn-session/app/getTokenBySToke
 # 米游社的API列表
 bbs_account_info = "https://webapi.account.mihoyo.com/Api/cookie_accountinfo_by_loginticket"
 bbs_get_multi_token_by_login_ticket = f"{web_api}/auth/api/getMultiTokenByLoginTicket"
-bbs_get_cookie_token_by_stoken = f"{web_api}/auth/api/getCookieAccountInfoBySToken"
 bbs_tasks_list = f"{bbs_api}/apihub/wapi/getUserMissionsState"  # 获取任务列表
 bbs_sign_url = f"{bbs_api}/apihub/app/api/signIn"  # post
 bbs_post_list_url = f"{bbs_api}/post/api/getForumPostList"

@@ -1,5 +1,4 @@
 import re
-from copy import deepcopy
 
 import config
 import setting
@@ -64,22 +63,6 @@ def get_stoken(login_ticket: str, uid: str) -> str:
         log.error("login_ticket（只有半小时有效期）已失效,请重新登录米游社抓取 cookie")
         config.clear_cookie()
         raise CookieError('Cookie expires')
-
-
-def get_cookie_token_by_stoken():
-    if config.config["account"]["stoken"] == "" and config.config["account"]["stuid"] == "":
-        log.error("Stoken 和 Suid 为空，无法自动更新 CookieToken")
-        config.clear_cookie()
-        raise CookieError('Cookie expires')
-    header = deepcopy(headers)
-    header["cookie"] = get_stoken_cookie()
-    data = http.get(url=setting.bbs_get_cookie_token_by_stoken,
-                    headers=header).json()
-    if data.get("retcode", -1) != 0:
-        log.error("stoken 已失效，请重新抓取 cookie")
-        config.clear_stoken()
-        raise StokenError('Stoken expires')
-    return data["data"]["cookie_token"]
 
 
 def update_cookie_token() -> bool:
